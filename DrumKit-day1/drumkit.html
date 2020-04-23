@@ -72,9 +72,8 @@ var app = new Vue({
 
   methods: {
   	Togglekey(){
-  		console.log(this.code)
   		var audio = new Audio(this.src)
-  		//  = this.playing
+  		this.key = this.playing
   		audio.play()
   		
   	}
