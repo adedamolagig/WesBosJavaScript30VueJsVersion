@@ -46,7 +46,7 @@
 		    </div>
   		</div>
 
-	  <audio data-key="65" src="sounds/clap.wav"></audio>
+	  <audio data-key="65" :src="src"></audio>
 	  <audio data-key="83" src="sounds/hihat.wav"></audio>
 	  <audio data-key="68" src="sounds/kick.wav"></audio>
 	  <audio data-key="70" src="sounds/openhat.wav"></audio>
@@ -66,12 +66,16 @@ var app = new Vue({
     message: 'You loaded this page on ' + new Date().toLocaleString(),
     key: "key",
     playing: "playing",
+    src: "sounds/boom.wav",
     
   }, 
 
   methods: {
   	Togglekey(){
-  		this.key = this.playing
+  		console.log(this.code)
+  		var audio = new Audio(this.src)
+  		//  = this.playing
+  		audio.play()
   		
   	}
   }
