@@ -9,7 +9,7 @@
 	<div id="root">
 		<div class="keys">
 			<div v-for="key in keys" >
-			    <div data-key="key.datakey" class="key" @click="Togglekey">
+			    <div data-key="key.datakey" class="key" @click="Togglekey(key)">
 			      <kbd> {{ key.kbd }} </kbd>
 			      <span class="sound">{{key.sound}}</span>
 			    </div>    
@@ -36,18 +36,15 @@ var app = new Vue({
   data: {
     message: 'You loaded this page on ' + new Date().toLocaleString(),
     keys: [
-    	{datakey: '65', kbd: 'A', sound: 'Clap'},
-    	{datakey: '83', kbd: 'S', sound: 'hihat'},
-    	{datakey: '68', kbd: 'D', sound: 'kick'},
-    	{datakey: '70', kbd: 'F', sound: 'openhat'},
-    	{datakey: '71', kbd: 'G', sound: 'boom'},
-    	{datakey: '72', kbd: 'H', sound: 'ride'},
-    	{datakey: '74', kbd: 'J', sound: 'snare'},
-    	{datakey: '75', kbd: 'K', sound: 'tom'},
-    	{datakey: '76', kbd: 'L', sound: 'tink'},
-
-
-
+    	{datakey: '65', kbd: 'A', sound: 'Clap', mp3: new Audio("sounds/clap.wav"), isPlaying: false},
+    	{datakey: '83', kbd: 'S', sound: 'hihat', mp3: new Audio ("sounds/hihat.wav"), isPlaying: false},
+    	{datakey: '68', kbd: 'D', sound: 'kick', mp3: new Audio ("sounds/kick.wav"), isPlaying: false },
+    	{datakey: '70', kbd: 'F', sound: 'openhat', mp3: new Audio ("sounds/openhat.wav"), isPlaying: false},
+    	{datakey: '71', kbd: 'G', sound: 'boom', mp3: new Audio ("sounds/boom.wav"), isPlaying: false},
+    	{datakey: '72', kbd: 'H', sound: 'ride', mp3: new Audio ("sounds/ride.wav"), isPlaying: false},
+    	{datakey: '74', kbd: 'J', sound: 'snare', mp3: new Audio ("sounds/snare.wav"), isPlaying: false},
+    	{datakey: '75', kbd: 'K', sound: 'tom', mp3: new Audio ("sounds/tom.wav"), isPlaying: false},
+    	{datakey: '76', kbd: 'L', sound: 'tink', mp3: new Audio ("sounds/tink.wav"), isPlaying: false},
     ],
     playing: "playing",
     src: "sounds/boom.wav",
@@ -55,13 +52,31 @@ var app = new Vue({
   }, 
 
   methods: {
-  	Togglekey(){
-  		var audio = new Audio(this.src)
-  		setTimeout(() => this.key = this.playing, 500);
-  		audio.play()
-  		splicer = this.key
-  		this.key = 'key'
-  	}
+  	Togglekey(selectedKey){
+  		// var audio = new Audio(this.src)
+  		// setTimeout(() => this.key = this.playing, 500);
+  		// audio.play()
+  		// splicer = this.key
+  		// this.key = 'key'
+  		this.keys.forEach(key => {console.log(key.datakey)})
+  		// alert('selecting')
+  		
+  		var KeyArray = this.keys
+  		// console.log(event.target.$.each(event.target => {KeyArray[mp3]}
+  		// 	))
+  		//trying forEach Array in Vuejs
+  		// this.src = this.keys
+  		// console.log(this.keys.slice(printArray(), 1))
+
+  	},
+  		//the method that allows trying forEach array in Vuejs to work
+  	// printArray: function(item, index){
+  	// 	console.log(index[index])
+  	// }
+
+  	
+
+
   }
 
 })
