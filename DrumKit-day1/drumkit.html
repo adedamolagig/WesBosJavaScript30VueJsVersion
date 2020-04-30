@@ -9,7 +9,7 @@
 	<div id="root">
 		<div class="keys">
 			<div v-for="key in keys" >
-			    <div data-key="key.datakey" class="key" @click="Togglekey(key)">
+			    <div data-key="key.datakey" :class="[key.isPlaying? 'playing' : '', 'key']" @click="Togglekey(key)">
 			      <kbd> {{ key.kbd }} </kbd>
 			      <span class="sound">{{key.sound}}</span>
 			    </div>    
