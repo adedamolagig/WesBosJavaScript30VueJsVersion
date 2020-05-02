@@ -9,32 +9,19 @@
 	<div id="root">
 		<div class="keys">
 			<div v-for="key in keys" >
-			    <div data-key="key.datakey" :class="[key.isPlaying? 'playing' : '', 'key']" @click="Togglekey(key)">
+			    <div :key="key.datakey" :class="[key.isPlaying? 'playing' : '', 'key']" @transitionend="removeTransition($event, key)">
 			      <kbd> {{ key.kbd }} </kbd>
 			      <span class="sound">{{key.sound}}</span>
 			    </div>    
   			</div>
 		</div>
-		
-
-	  <audio data-key="65" :src="src"></audio>
-	  <audio data-key="83" src="sounds/hihat.wav"></audio>
-	  <audio data-key="68" src="sounds/kick.wav"></audio>
-	  <audio data-key="70" src="sounds/openhat.wav"></audio>
-	  <audio data-key="71" src="sounds/boom.wav"></audio>
-	  <audio data-key="72" src="sounds/ride.wav"></audio>
-	  <audio data-key="74" src="sounds/snare.wav"></audio>
-	  <audio data-key="75" src="sounds/tom.wav"></audio>
-	  <audio data-key="76" src="sounds/tink.wav"></audio>	
 	</div>
-
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
 
 var app = new Vue({
   el: '#root',
   data: {
-    message: 'You loaded this page on ' + new Date().toLocaleString(),
     keys: [
     	{datakey: '65', kbd: 'A', sound: 'Clap', mp3: new Audio("sounds/clap.wav"), isPlaying: false},
     	{datakey: '83', kbd: 'S', sound: 'hihat', mp3: new Audio ("sounds/hihat.wav"), isPlaying: false},
@@ -46,42 +33,25 @@ var app = new Vue({
     	{datakey: '75', kbd: 'K', sound: 'tom', mp3: new Audio ("sounds/tom.wav"), isPlaying: false},
     	{datakey: '76', kbd: 'L', sound: 'tink', mp3: new Audio ("sounds/tink.wav"), isPlaying: false},
     ],
-    playing: "playing",
-    src: "sounds/boom.wav",
-    
   }, 
-
   methods: {
-  	Togglekey(selectedKey){
-  		// var audio = new Audio(this.src)
-  		// setTimeout(() => this.key = this.playing, 500);
-  		// audio.play()
-  		// splicer = this.key
-  		// this.key = 'key'
-  		this.keys.forEach(key => {console.log(key.datakey)})
-  		// alert('selecting')
-  		
-  		var KeyArray = this.keys
-  		// console.log(event.target.$.each(event.target => {KeyArray[mp3]}
-  		// 	))
-  		//trying forEach Array in Vuejs
-  		// this.src = this.keys
-  		// console.log(this.keys.slice(printArray(), 1))
-
-  	},
-  		//the method that allows trying forEach array in Vuejs to work
-  	// printArray: function(item, index){
-  	// 	console.log(index[index])
-  	// }
-
-  	
-
-
-  }
-
-})
-
-	
+      removeTransition (e, key) {
+        if (e.propertyName !== 'transform') { return }
+        key.isPlaying = false
+      },
+      playSound(e) {
+        // const key = this.keys.find( key => {console.log(key.datakey)})
+        const key = this.keys.find( ({ datakey }) => datakey === `${e.keyCode}`);
+        if (!key) { return }
+        key.mp3.currentTime = 0
+        key.isPlaying = true
+        key.mp3.play()
+      }
+    },
+    mounted() {
+      window.addEventListener('keydown', this.playSound)
+    }
+})	
 </script>
 </body>
 
